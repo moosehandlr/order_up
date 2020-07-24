@@ -19,5 +19,28 @@ RSpec.describe 'As a visitor' do
       expect(page).to have_content(ingredient2.name)
       expect(page).to have_content(ingredient3.name)
     end
+
+    # Story 2 of 3
+    # As a visitor
+    # When I visit a dish's show page
+    # I see the total calorie count for that dish.
+    it "I see the total calorie count for that dish." do
+      chef1 = Chef.create!(name: 'Big Pappa')
+      dish1 = Dish.create!(name: 'Cheese Burger', description: '1/2 Pound Angus Beef with American Cheese', chef: chef1)
+
+      ingredient1 = Ingredient.create!(name: "Angus Beef", calories: 200)
+      ingredient2 = Ingredient.create!(name: "American Cheese", calories: 50)
+      ingredient3 = Ingredient.create!(name: "Wheat Buns", calories: 35)
+
+
+      visit "/dishes/#{dish1.id}"
+
+      expect(page).to have_content(dish1.name)
+      expect(page).to have_content(chef1.name)
+      expect(page).to have_content(ingredient1.name)
+      expect(page).to have_content(ingredient2.name)
+      expect(page).to have_content(ingredient3.name)
+      expect(page).to have_content("Total Calories: 285")
+    end
   end
 end
